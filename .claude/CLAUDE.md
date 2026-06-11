@@ -154,6 +154,7 @@ Full specification: `docs/FILE-ORGANIZATION.md`. Summary:
 | `/ingest` | New source material; "ingest this"; "update the plans" | Continuous-integration pipeline for the knowledge system |
 | `/corp-data` | "get from Teams"; "check SharePoint"; corporate data requests | Routes through corporate CLI subprocess |
 | `/morning-briefing` | "morning briefing"; "catch me up"; "what did I miss" | Harvests Teams last 24h, categorizes by urgency |
+| `/os-briefing` | "os briefing"; "repo briefing"; "what changed in the repo"; "catch me up on the OS" | Repo-native briefing from git history — decisions, risks, ingests, plan changes, personalized by invoker |
 | `/challenge-me` | "challenge me"; "stress test this"; "poke holes in" | One-question-at-a-time interrogation of plans and designs |
 
 ---

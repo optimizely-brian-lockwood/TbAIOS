@@ -5,6 +5,9 @@
 # OS-generated reports
 reports/
 
+# Per-user session markers (os-briefing skill)
+.briefing-markers/
+
 # Python
 __pycache__/
 *.pyc
