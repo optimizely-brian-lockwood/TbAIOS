@@ -3,6 +3,13 @@ name: os-briefing
 description: "Generate a personalized repo-state briefing from git history. Shows decisions made, risks updated, items ingested, plan changes, and what's relevant for you specifically — without touching Teams or corporate data. Triggers on \"/os-briefing\", \"os briefing\", \"repo briefing\", \"what changed in the repo\", or \"catch me up on the OS\"."
 ---
 
+## Response contract
+
+This skill must honor the **Response contract** in `.claude/CLAUDE.md` for all
+interstitial chat output. The briefing markdown artifact keeps its own format — but the
+chat-side wrapper (status, "briefing ready", decision prompts) is headline + decisions +
+bullets.
+
 ## What this skill does
 
 Reads the git log since your last session-marker, deep-reads program records and pending extraction files that changed, and produces a structured briefing scoped to what the OS knows. No Teams. No corporate data. Repo state only.

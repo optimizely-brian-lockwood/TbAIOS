@@ -3,6 +3,13 @@ name: ingest
 description: Ingest new source information into any initiative's operating system — meeting notes, Teams chats, decisions, stakeholder inputs, documents — then audit and update all affected plans, records, and artifacts. Triggers on "ingest this", "update the plans with this", "feed this in", "here's new info", or when the user provides source material. Also triggers on "audit the docs", "refresh the plans", "are the records up to date".
 ---
 
+## Response contract
+
+This skill must honor the **Response contract** in `.claude/CLAUDE.md` for all
+interstitial chat output (status, prompts, summaries). Headline + `Decisions needed:`
+block + bullets. The structured artifact blocks below (Ingest Summary, pending file,
+Capture Complete) keep their own formats — they are the artifact, not the chat.
+
 ## What this skill does
 
 This is the continuous integration pipeline for the AI OS knowledge system. It operates in

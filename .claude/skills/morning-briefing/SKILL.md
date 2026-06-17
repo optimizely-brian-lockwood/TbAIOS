@@ -3,6 +3,13 @@ name: morning-briefing
 description: "Harvest Microsoft Teams messages from the last 24 hours, synthesize a prioritized morning briefing, save to file, and push-notify the user. Triggers on \"morning briefing\", \"catch me up\", \"overnight summary\", \"what did I miss\", \"teams briefing\", \"daily digest\", or any request for a consolidated Teams summary."
 ---
 
+## Response contract
+
+This skill must honor the **Response contract** in `.claude/CLAUDE.md` for all
+interstitial chat output. The briefing markdown artifact keeps its own format — but the
+chat-side wrapper (status, "briefing ready", decision prompts) is headline + decisions +
+bullets.
+
 ## What this skill does
 
 Pulls all Teams messages the user was involved in over the last 24 hours, categorizes them by urgency, and produces a morning briefing. Output is:
