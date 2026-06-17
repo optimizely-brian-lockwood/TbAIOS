@@ -88,7 +88,7 @@ the AI Office team and the dev team. No direct engagement of dev-team agents fro
 | New source material (meeting notes, chats, decisions) | `/ingest` skill |
 | Audit records for consistency | `/ingest audit` |
 | File inventory / next D-number / pending count | `/ingest status` |
-| Corporate data (Teams, Outlook, SharePoint, Salesforce) | `/corp-data` skill or `corp-data-agent` |
+| Corporate data (Teams, Outlook, SharePoint, Salesforce) — **only when explicitly asked** | `/corp-data` skill or `corp-data-agent` |
 | Morning briefing / Teams digest | `/morning-briefing` skill |
 | Stress-test a plan, decision, or design | `/challenge-me` skill |
 | Design agent + skill roster for an initiative | `capability-designer` |
@@ -197,6 +197,13 @@ contract on the next turn.
 - **Never delete content from records.** Append, update status, or mark as superseded.
 - **Always file raw input.** Every ingestion creates a file in `docs/records/inputs/YYYY-MM/`.
 - **Corp-data always uses Sonnet.** Never Opus or other models for the corporate subprocess.
+- **Corp-data is explicit-invocation only.** Never auto-fire the `/corp-data` skill or
+  the `corp-data-agent` from inferred triggers ("check Teams", "look up in SharePoint",
+  "what did the CSM say"). If corporate data appears to be needed, **stop and ask** —
+  surface the question as a `Decisions needed:` block. The only auto-invocations
+  permitted are skills the user explicitly launched that depend on corp-data internally
+  (e.g. `/morning-briefing`); user invocation of the parent skill is the explicit
+  consent. Anywhere else, ask first.
 - **Initiative separation is absolute.** When the client `CLAUDE.md` defines multiple
   initiatives, every ingest, artifact, decision, and routing action must be tagged to one
   initiative before proceeding. When the initiative is ambiguous, stop and ask — never guess

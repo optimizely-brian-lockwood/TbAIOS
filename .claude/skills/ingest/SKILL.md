@@ -62,13 +62,16 @@ belongs to exactly one initiative.
 
 If the input is ambiguous, ask ONE clarifying question. If it clearly maps, proceed.
 
-### Step 2: If Teams harvest needed, fetch via corp-data
+### Step 2: If Teams harvest needed, confirm before fetching via corp-data
 
 If classification is `teams-chat` and the user specified a chat name:
 
-1. Use the corp-data skill pattern (see `.claude/skills/corp-data/skill.md`) to harvest the chat
-2. Search for messages and any shared files
-3. Return all content before proceeding to Step 3
+1. **Stop and ask** — corp-data is explicit-only. Surface:
+   `Decisions needed: [A] harvest <chat-name> via corp-data  [B] skip — paste content manually  [C] cancel`
+2. Only on `[A]` (or if the user's original invocation said "harvest Teams chat X"
+   explicitly), use the corp-data skill pattern to harvest the chat
+3. Search for messages and any shared files
+4. Return all content before proceeding to Step 3
 
 ### Step 3: Extract structured information from the input
 
