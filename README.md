@@ -17,6 +17,24 @@ provides:
 - The **three-lens framework** and **dual-metric discipline**
 - A **file organization spec** and record structure
 
+## Works with (not just Claude Code)
+
+TbAI OS is portable across agentic coding tools. The brain lives once in the CLAUDE files /
+`.claude/`; each tool reads it through a thin adapter — no duplicated rules, no drift.
+
+| Tool | Entry file |
+|---|---|
+| **Claude Code** | `CLAUDE.md` + `.claude/` (native — subagents, skills, hooks) |
+| **OpenAI Codex** | `AGENTS.md` (native) |
+| **Cursor 3** | `.cursor/rules/tbai-os.mdc` → `AGENTS.md` |
+| **Devin** | `.devin/playbook.md` → `AGENTS.md` |
+| **Intent** | `.intent/os.md` → `AGENTS.md` |
+| **Google Antigravity** | `.antigravity/config.md` → `AGENTS.md` |
+
+`AGENTS.md` is the portable brain read by the open-standard tools. Full guide and the
+what-ports/what-doesn't matrix: [`docs/multi-tool-support.md`](docs/multi-tool-support.md).
+Derived repos inherit this layer via `git merge upstream/main`.
+
 ## Architecture
 
 TbAI OS uses a two-layer CLAUDE.md design:
