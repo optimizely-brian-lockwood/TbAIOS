@@ -1,0 +1,25 @@
+name: Tool config sync
+
+# Fails if the generated per-tool agent configs (.cursor/agents, .codex/agents,
+# the AGENTS.md roster) have drifted from the .claude/agents source of truth in
+# EITHER direction:
+#   - forward-stale : a source agent changed but its generated peers weren't regenerated
+#   - importable    : an agent was authored inside a tool and not imported into .claude/
+# Fix locally with:  python scripts/sync-tool-configs.py            (forward)
+#                     python scripts/sync-tool-configs.py --import   (reverse)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify tool configs are in sync (both directions)
+        run: python scripts/sync-tool-configs.py --check
