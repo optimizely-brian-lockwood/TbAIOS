@@ -23,24 +23,52 @@ The engine is **`scripts/sync-tool-configs.py`**. It reads `.claude/agents/**`, 
 Claude-Code tool names to each target tool's capability set, and writes the native agent
 definitions plus the `AGENTS.md` roster block. It is idempotent — running it twice is a no-op.
 
+**The flow is bidirectional:**
+
+- **Forward** (`.claude/agents/` → tools) — the default and the hook. Generated files carry an
+  `AUTO-GENERATED` marker; the engine only ever overwrites or deletes marker-bearing files, so
+  anything authored *inside* a tool is never clobbered.
+- **Reverse** (tool → `.claude/agents/`) — `--import`. A Cursor/Codex agent file *without* the
+  marker was hand-authored in that tool. `--import` pulls it into
+  `.claude/agents/imported/<name>.md` (making it a real source agent), removes the tool copy,
+  and forward-syncs so the agent then exists in every tool. Portable parts (name, description,
+  prompt) import cleanly; tool-specific tool names get a default set for you to confirm.
+
 ## When you are invoked
 
 1. **An agent/skill was added, changed, or removed** → run `python scripts/sync-tool-configs.py`,
    report exactly what changed (created / updated / removed per tool), and confirm
    `--check` passes.
 2. **Parity audit** ("are the tools in sync?") → run `python scripts/sync-tool-configs.py --check`.
-   Exit 0 = in sync. Non-zero = list the stale files and regenerate.
-3. **Onboard a new tool** → add a renderer function to the script (mirroring `render_cursor`
-   / `render_codex`), a thin pointer adapter under the tool's config dir, a row in the
+   Exit 0 = in sync. Non-zero = it lists two kinds of drift: *forward-stale* generated files
+   (regenerate) and *importable* tool-authored agents (see next item).
+3. **Someone built an agent in another tool** (Cursor, Codex, …) and it should live in the OS →
+   run `python scripts/sync-tool-configs.py --import`. It lands new agents in
+   `.claude/agents/imported/`. **Review each**: confirm `tools`/`model`, tighten read-only if
+   appropriate, then move the file into `office/` or `dev/` and re-run the generator. Name
+   collisions with an existing source agent are reported and NOT imported — resolve those by
+   hand (usually: the tool file was a hand-edit of a generated file; discard it and edit the
+   source instead).
+4. **Onboard a new tool** → add a renderer function to the script (mirroring `render_cursor`
+   / `render_codex`), a reverse parser (mirroring `_parse_cursor_agent` / `_parse_codex_agent`)
+   so import works both ways, a thin pointer adapter under the tool's config dir, a row in the
    `docs/multi-tool-support.md` matrix and the README "Works with" table, then regenerate.
    Verify against the tool's real config format before shipping — cite the source.
-4. **A hard rule or routing rule changed in a CLAUDE file** → update the hand-written prose in
+5. **A hard rule or routing rule changed in a CLAUDE file** → update the hand-written prose in
    `AGENTS.md` to match (the CLAUDE files always win on conflict), then regenerate the roster.
 
 ## Hard rules for this role
 
 - **Never hand-edit a generated file.** If a generated file is wrong, fix the source agent or
   the generator, then regenerate. Hand edits are erased on the next run — and that is correct.
+- **Never clobber a foreign file.** A tool agent file without the `AUTO-GENERATED` marker was
+  authored in that tool — it is data to import, not overwrite. The engine already protects it;
+  do not defeat that.
+- **Imported agents land in `imported/` for review, not production.** After `--import`, confirm
+  each agent's tools/model and read-only status, then relocate it to `office/` or `dev/`. Do
+  not leave the OS running on unreviewed imports.
+- **Only agents auto-import.** Rules, hooks, and skills authored in another tool are
+  tool-specific and are NOT auto-imported — surface them for a human decision.
 - **Never put brain content in an adapter.** Adapters are pointers. Real content lives in
   `AGENTS.md` or the CLAUDE files.
 - **The tool-name mapping is best-effort, not perfect.** `PORTABLE_TOOLS` in the script maps

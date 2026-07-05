@@ -70,17 +70,36 @@ These are the load-bearing invariants. Breaking one corrupts the knowledge base:
 ## Staying in sync — the generator, the hook, and the steward
 
 When someone changes the OS — adds an agent, renames a role, retires one — every tool must
-update too. That is automated, not manual:
+update too. That is automated, not manual, **and it works in both directions**:
 
-- **Source of truth:** `.claude/agents/**`. Edit only here.
-- **Engine:** `scripts/sync-tool-configs.py` reads the source and regenerates
-  `.cursor/agents/*.md`, `.codex/agents/*.toml`, and the roster block in `AGENTS.md`. It is
-  idempotent; `--check` verifies parity (use it in CI / pre-commit).
+- **Source of truth:** `.claude/agents/**`. This is where agents live.
+- **Engine:** `scripts/sync-tool-configs.py`.
+  - **Forward** (default): regenerates `.cursor/agents/*.md`, `.codex/agents/*.toml`, and the
+    roster block in `AGENTS.md`. Idempotent; `--check` verifies parity (use in CI / pre-commit).
+  - **Reverse** (`--import`): pulls an agent authored *inside* a tool (Cursor, Codex) back into
+    `.claude/agents/imported/`, then forward-syncs it to every tool. Generated files carry an
+    `AUTO-GENERATED` marker; the engine only overwrites/deletes marker-bearing files, so a
+    hand-authored tool file is **never clobbered** — it is imported instead.
 - **Hook:** a `PostToolUse` hook runs `sync-tool-configs.py --hook` whenever a file under
   `.claude/agents/` or `.claude/skills/` is written — so the tools regenerate the moment the
-  source changes. In normal use you never run anything by hand.
+  source changes. (Forward only; import is deliberate, never automatic.)
 - **Owner:** the **`config-steward`** agent. Route to it (or run the `/sync-tool-configs`
-  skill) after adding/removing an agent, when onboarding a new tool, or when `--check` fails.
+  skill) after adding/removing an agent, to import a tool-authored agent, when onboarding a new
+  tool, or when `--check` fails.
+
+### Someone built an agent in Cursor / Codex — how it comes home
+
+1. They author, e.g., `.cursor/agents/deal-desk-analyst.md` directly in the tool.
+2. `python scripts/sync-tool-configs.py --check` flags it as *importable*.
+3. `python scripts/sync-tool-configs.py --import` writes
+   `.claude/agents/imported/deal-desk-analyst.md` (the source of truth), removes the tool copy,
+   and regenerates the agent for **every** tool.
+4. `config-steward` reviews it — confirms `tools`/`model`, tightens read-only — and moves it
+   into `office/` or `dev/`. Now it is a first-class OS role everywhere.
+
+Portable parts (name, description, prompt) import cleanly. Tool-specific tool names get a
+sensible default for review. Only **agents** auto-import; tool-specific rules/hooks/skills are
+surfaced for a human decision, not pulled in automatically.
 
 **Rules that keep this honest:**
 

@@ -232,6 +232,13 @@ The engine is `scripts/sync-tool-configs.py`; the `config-steward` agent owns it
 tool automatically.** To force it: `python scripts/sync-tool-configs.py` (or the
 `/sync-tool-configs` skill). To verify parity: `python scripts/sync-tool-configs.py --check`.
 
+**Sync runs both ways.** If someone builds an agent *inside* another tool (a Cursor or Codex
+agent authored directly, with no `AUTO-GENERATED` marker), pull it into the OS with
+`python scripts/sync-tool-configs.py --import`: it lands in `.claude/agents/imported/` as a
+real source agent and is then regenerated for every tool. The generator only ever overwrites
+files it generated, so tool-authored files are never clobbered — they are imported. `--check`
+reports both forward-stale and importable files.
+
 **Never hand-edit a generated file** — your change is erased on the next run. Fix the source
 agent in `.claude/agents/` instead.
 
