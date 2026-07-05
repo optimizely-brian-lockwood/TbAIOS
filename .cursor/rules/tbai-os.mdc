@@ -29,7 +29,12 @@ them as binding for every request:
 
 ## Cursor-specific notes
 
-- Cursor's Agents Window / Build-in-Parallel is your equivalent of Claude Code subagents.
-  Assign one role per agent lane; keep initiative separation intact across lanes.
-- Hooks in `.claude/settings.json` are **not** enforced here — follow
-  `docs/FILE-ORGANIZATION.md` manually.
+- **Native subagents are already generated** at `.cursor/agents/*.md` — one per OS role,
+  produced from `.claude/agents/` by `scripts/sync-tool-configs.py`. They show up in Cursor's
+  Agents Window ready to run. Assign one role per agent lane; keep initiative separation intact
+  across lanes.
+- **Do not hand-edit `.cursor/agents/*.md`** — they are generated and overwritten. To change a
+  role, edit `.claude/agents/<name>.md` and re-run the generator (or let the hook do it).
+- Hooks in `.claude/settings.json` are Claude-Code hooks. Cursor supports its own
+  `PreToolUse`/`PostToolUse` hooks — port them if you want the same guardrails; until then
+  follow `docs/FILE-ORGANIZATION.md` manually.

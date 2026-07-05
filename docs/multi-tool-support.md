@@ -6,21 +6,22 @@ explains how, and — honestly — what you gain and lose versus Claude Code.
 
 ## The design in one sentence
 
-**One brain, many doors.** The operating system's identity, team, routing, frameworks, and
-hard rules live once (`.claude/CLAUDE.md`, the root `CLAUDE.md`, and the roles/skills under
-`.claude/`). Every other tool reads a portable summary — `AGENTS.md` — through a small
-adapter file. No tool gets its own copy of the rules, so nothing drifts out of sync.
+**One brain, generated everywhere.** The operating system's identity, team, routing,
+frameworks, and hard rules live once — `.claude/CLAUDE.md`, the root `CLAUDE.md`, and the
+roles/skills under `.claude/`. The portable summary (`AGENTS.md`) and every tool's **native
+agent files** are *generated* from that source, and a hook keeps them current. No tool holds a
+hand-written copy of anything, so nothing drifts.
 
 ```
-.claude/CLAUDE.md (generic) + CLAUDE.md (engagement)   ← source of truth
-        │
+.claude/CLAUDE.md + CLAUDE.md + .claude/agents/**   ← SOURCE OF TRUTH (edit here only)
+        │  scripts/sync-tool-configs.py  (engine, hook-driven)
         ▼
-    AGENTS.md                        ← portable brain (open standard)
-    ├── .cursor/rules/tbai-os.mdc           → Cursor 3
-    ├── .devin/playbook.md                  → Devin
-    ├── .intent/os.md                       → Intent
-    ├── .antigravity/config.md              → Antigravity
-    └── (Codex reads AGENTS.md directly)
+    AGENTS.md (brain + generated roster)             ← portable brain (open standard)
+    ├── .cursor/agents/*.md   + .cursor/rules/tbai-os.mdc   → Cursor 3 (native subagents)
+    ├── .codex/agents/*.toml                                → Codex (native subagents)
+    ├── .devin/playbook.md                                  → Devin
+    ├── .intent/os.md                                       → Intent
+    └── .antigravity/config.md                             → Antigravity
 ```
 
 ## Per-tool setup
@@ -28,28 +29,29 @@ adapter file. No tool gets its own copy of the rules, so nothing drifts out of s
 | Tool | What it reads | You need to |
 |---|---|---|
 | **Claude Code** | `CLAUDE.md`, `.claude/` | Nothing — native. |
-| **OpenAI Codex** | `AGENTS.md` (root, native) | Open the repo; Codex loads `AGENTS.md` automatically. |
-| **Cursor 3** | `.cursor/rules/tbai-os.mdc` (`alwaysApply`) | Open the repo; the rule is always on and points to `AGENTS.md`. |
-| **Devin** | `AGENTS.md` + `.devin/playbook.md` | Point Devin at the repo; add `.devin/playbook.md` as a knowledge/playbook source if prompted. |
+| **OpenAI Codex** | `AGENTS.md` + `.codex/agents/*.toml` (native subagents) | Open the repo; Codex loads `AGENTS.md` and the generated subagents automatically. |
+| **Cursor 3** | `.cursor/rules/tbai-os.mdc` (`alwaysApply`) + `.cursor/agents/*.md` (native subagents) | Open the repo; the rule is always on and the generated agents appear in the Agents Window. |
+| **Devin** | `AGENTS.md` + `.devin/playbook.md` + `.claude/agents/**` | Point Devin at the repo; add `.devin/playbook.md` as a knowledge/playbook source if prompted. |
 | **Intent** | `.intent/os.md` → the CLAUDE/AGENTS files | Set Intent's living spec to the files listed in `.intent/os.md`. |
-| **Antigravity** | `AGENTS.md` + `.antigravity/config.md` | Open the repo; if hosting roles as custom agents, source prompts from `.claude/agents/**`. |
+| **Antigravity** | `AGENTS.md` + `.antigravity/config.md` + `.claude/agents/**` | Open the repo; for custom-agent hosting, source prompts from `.claude/agents/**` (or the generated `.cursor/agents/`). |
 
-## What ports, and what does not
+## What ports, and how
 
-| Capability | Claude Code | Codex / Cursor / Devin / Intent / Antigravity |
+| Capability | Claude Code | Codex / Cursor / Devin / Antigravity / Intent |
 |---|---|---|
 | Identity, routing, frameworks, hard rules | ✅ native | ✅ via `AGENTS.md` |
-| Team role definitions (`.claude/agents/`) | ✅ executable subagents | ✅ readable role prompts — adopt one at a time |
-| Skills (`.claude/skills/`) | ✅ `/skill` invocation | ✅ readable procedures — run the steps manually |
-| Parallel multi-agent orchestration | ✅ native (subagents + Workflow) | ⚠️ use the tool's own multi-agent feature (Cursor Agents Window, Devin sub-agents, Antigravity subagents); it is not automatic |
-| Hooks (file-placement validation) | ✅ enforced on write | ❌ not enforced — follow `docs/FILE-ORGANIZATION.md` by hand |
+| Team roles (`.claude/agents/`) | ✅ executable subagents | ✅ **native subagents** — generated to `.cursor/agents/*.md`, `.codex/agents/*.toml`; Antigravity/Devin read `.claude/agents/` |
+| Parallel multi-agent orchestration | ✅ native (subagents + Workflow) | ✅ each tool's own runner (Cursor Agents Window, Devin sub-agents, Antigravity subagents). Only the `Workflow` JS DSL is Claude-Code-specific |
+| Skills (`.claude/skills/`) | ✅ `/skill` invocation | ⚠️ readable procedures — run the steps manually (not yet generated to native formats) |
+| Hooks / guardrails | ✅ enforced on write | ⚠️ Cursor & Antigravity have native hooks (portable); Codex/Devin/Intent rely on prompt discipline |
 | MCP connectors (corporate data, task systems) | ✅ per session | ⚠️ only if the tool supports MCP and you connect them |
 | Slash-command skill invocation (`/ingest`) | ✅ | ❌ open `SKILL.md` and follow it manually |
 
-**The honest bottom line:** on any tool you inherit the *full knowledge system* — the same
-records, team structure, routing, and rules. What you give up outside Claude Code is
-*automation*: automatic subagent orchestration and hook-enforced guardrails. On other tools
-you run those steps yourself and stay disciplined about the hard rules.
+**The honest bottom line:** on any tool you inherit the *full knowledge system* and the *team
+as native runnable agents* — same records, roster, routing, and rules. The remaining
+Claude-Code-only pieces are the `Workflow` orchestration DSL and slash-command skill
+invocation; skills elsewhere are run as manual procedures. Cursor and Antigravity can even
+enforce the guardrail hooks natively.
 
 ## Rules everyone must keep, regardless of tool
 
@@ -65,13 +67,31 @@ These are the load-bearing invariants. Breaking one corrupts the knowledge base:
 6. **Follow the response contract** — headline → decisions needed → evidence → preview
    before writing to `docs/records/`.
 
-## Keeping the adapters honest
+## Staying in sync — the generator, the hook, and the steward
 
-The adapters are deliberately **pointers, not copies** — they contain no duplicated rules, so
-there is nothing to keep in sync when the brain changes. If you ever add real content to an
-adapter, move it into `AGENTS.md` (or the CLAUDE files) instead and leave a pointer. The only
-file that summarizes the brain is `AGENTS.md`; when `.claude/CLAUDE.md` changes materially,
-update `AGENTS.md` to match. The CLAUDE files always win on conflict.
+When someone changes the OS — adds an agent, renames a role, retires one — every tool must
+update too. That is automated, not manual:
+
+- **Source of truth:** `.claude/agents/**`. Edit only here.
+- **Engine:** `scripts/sync-tool-configs.py` reads the source and regenerates
+  `.cursor/agents/*.md`, `.codex/agents/*.toml`, and the roster block in `AGENTS.md`. It is
+  idempotent; `--check` verifies parity (use it in CI / pre-commit).
+- **Hook:** a `PostToolUse` hook runs `sync-tool-configs.py --hook` whenever a file under
+  `.claude/agents/` or `.claude/skills/` is written — so the tools regenerate the moment the
+  source changes. In normal use you never run anything by hand.
+- **Owner:** the **`config-steward`** agent. Route to it (or run the `/sync-tool-configs`
+  skill) after adding/removing an agent, when onboarding a new tool, or when `--check` fails.
+
+**Rules that keep this honest:**
+
+- **Never hand-edit a generated file** (`.cursor/agents/*`, `.codex/agents/*`, the `AGENTS.md`
+  roster block). Your edit is erased on the next run. Fix the source agent instead.
+- **Adapters are pointers, not copies** (`.cursor/rules/`, `.devin/`, `.intent/`,
+  `.antigravity/`). No brain content in them.
+- **`AGENTS.md` prose is the only hand-written summary of the brain.** When `.claude/CLAUDE.md`
+  changes materially, update `AGENTS.md` prose to match. The CLAUDE files always win on conflict.
+- **Onboarding a new tool** = add a renderer to `sync-tool-configs.py` + a pointer adapter +
+  a matrix row, then regenerate. The `config-steward` agent's definition documents the steps.
 
 ## For derived engagement repos
 

@@ -47,22 +47,53 @@ defined in the root `CLAUDE.md`. Read it to know where you are.
 The OS runs two specialist agentic teams. Full role definitions live in `.claude/agents/`.
 Each file has YAML frontmatter (`name`, `description`, `tools`) and a system prompt.
 
-**How to use a role in a tool without native subagents** (Codex, Cursor, Devin, Intent,
-Antigravity): open the role's `.md` file, **adopt its system prompt as your operating
-instructions for that piece of work**, and stay inside the boundaries it defines. Never blend
-two roles in one pass — switch files, switch hats.
+**Native subagents everywhere.** Codex, Cursor, Devin, and Antigravity all run native
+subagents. This repo ships each role as a **native agent file per tool** —
+`.cursor/agents/<name>.md`, `.codex/agents/<name>.toml` — generated from the `.claude/agents/`
+source of truth (see "Staying in sync" below). Point the tool at its own agents dir, or open a
+role file and adopt it directly. Never blend two roles in one pass — switch files, switch hats.
 
-### AI Office team — `.claude/agents/office/` (consultative brain, 15 roles)
-`transformation-lead` (entry point — route here first) · `program-manager` ·
-`operations-strategist` · `ai-solution-architect` · `customer-journey-designer` ·
-`workflow-designer` · `change-management-lead` · `enablement-specialist` ·
-`data-analytics-lead` · `engineering-liaison` · `ai-governance-officer` ·
-`value-realization-analyst` · `product-sme` · `capability-designer` · `talent-advisor`
+The entry roles: `transformation-lead` (AI Office) and `engineering-manager` (Dev team). The
+current roster (generated — do not edit this block by hand):
 
-### Dev team — `.claude/agents/dev/` (build arm, 11 roles)
-`engineering-manager` (entry point) · `product-manager` · `software-architect` ·
-`ux-designer` · `tech-lead` · `senior-developer` · `developer` · `qa-engineer` ·
-`code-reviewer` · `security-engineer` · `devops-engineer`
+<!-- BEGIN GENERATED: agent-roster (managed by scripts/sync-tool-configs.py — do not edit by hand) -->
+<!-- 28 agents. Regenerate with: python scripts/sync-tool-configs.py -->
+
+### AI Office team — `.claude/agents/office/`
+- **`ai-governance-officer`** — Owns responsible AI governance for the Customer Success Transformation — customer data privacy, model risk, customer-facing AI exposure, regulatory considerations (GDPR / CCPA / customer contracts), guardrail specifications.
+- **`ai-solution-architect`** — Owns the AI capability map for the Customer Success Transformation — where AI is fit-for-purpose, where it isn't, build vs. buy vs. partner stance, integration constraints, technical risks.
+- **`capability-designer`** — Designs the full agentic capability package — agents and skills — for each AI Office initiative.
+- **`change-management-lead`** — Owns the people-side of the CS Transformation — adoption strategy, stakeholder and sponsor mapping, resistance management, champion activation, comms plan, rollout sequencing.
+- **`customer-journey-designer`** — Owns the customer-side experience across the full Optimizely journey — pre-sales validation, sales handoff, kickoff, onboarding, training, launch, value realization, adoption, expansion, renewal, save/advocacy.
+- **`data-analytics-lead`** — Owns the data layer for the CS Transformation — inventory of available data, segmentation logic, health-scoring signals, telemetry from client products, evidence to ground any productivity claim or AI design.
+- **`enablement-specialist`** — Owns CSM enablement — curriculum design, certification criteria, playbooks, in-the-flow training, ongoing reinforcement.
+- **`engineering-liaison`** — The only authorized bridge from the CS Transformation team to the dev team.
+- **`operations-strategist`** — Owns the Customer Success operating model — tier coverage models (Digital / Mid-Market / Enterprise), capacity math, target metrics, what changes vs. today.
+- **`product-sme`** — Client product subject-matter expert for the CS Transformation team.
+- **`program-manager`** — Owns the institutional record of the CS Transformation engagement — decision log, plan of record, weekly pre-read packs, agentic team progress tracker, risk & dependency register, stakeholder map, meeting minutes, and the artifact index.
+- **`talent-advisor`** — Owns the talent layer of the AI Office — both AI agent lifecycle (tracking initiative-specific agents from creation through promotion, retirement, or archival) and human hiring front-end (role scoping, job description drafting, candidate briefs, interview guides, and screening rubrics).
+- **`transformation-lead`** _(read-only)_ — Top-of-hierarchy lead for the CS Transformation team.
+- **`value-realization-analyst`** — Owns the productivity-and-relationship measurement for the CS Transformation — the 20%+ Digital CSM productivity target plus the relationship-health co-metric.
+- **`workflow-designer`** — Owns the CSM's day-in-the-life — the practitioner-side workflow design.
+
+### Dev team — `.claude/agents/dev/`
+- **`code-reviewer`** _(read-only)_ — Reviews pull requests for correctness, quality, conventions, and adherence to the agreed design.
+- **`developer`** — Implements features and bug fixes against a defined spec.
+- **`devops-engineer`** — Owns CI/CD pipelines, infrastructure, deployment, observability, and incident response.
+- **`engineering-manager`** _(read-only)_ — Top-of-hierarchy lead for the agentic dev team.
+- **`product-manager`** — Owns product scope, user stories, acceptance criteria, and success metrics.
+- **`qa-engineer`** — Owns test plans, test execution, regression coverage, bug reports, and release sign-off.
+- **`security-engineer`** — Owns threat modeling, security review, and vulnerability assessment.
+- **`senior-developer`** — Implements complex features, mentors developers, and refines design at the implementation level.
+- **`software-architect`** — Owns system design, technology selection, ADRs, and integration patterns.
+- **`tech-lead`** — Bridges product/architecture and the implementation team.
+- **`ux-designer`** — Owns user flows, wireframes, interaction specs, and visual/interaction design.
+
+### Core / cross-cutting — `.claude/agents/`
+- **`config-steward`** — Universal tool-configuration steward.
+- **`corp-data-agent`** _(read-only)_ — Corporate data conduit. Spawns a Claude CLI subprocess authenticated with the corporate Anthropic account (Sonnet model) to access Microsoft Teams, Outlook, SharePoint, OneDrive, Salesforce, and other corporate platforms.
+
+<!-- END GENERATED: agent-roster -->
 
 **The bridge rule:** the **only** authorized path from the AI Office team to the dev team is
 the `engineering-liaison`. Do not engage dev-team roles directly from the AI Office side.
@@ -167,24 +198,42 @@ Full spec: `docs/FILE-ORGANIZATION.md`.
 
 ---
 
-## Cross-tool support & limitations
+## Cross-tool support
 
-This OS was built on Claude Code and is portable to other agentic tools via this file plus
-thin adapters. **What ports and what does not:**
+This OS was built on Claude Code and is portable to other agentic tools. Codex, Cursor,
+Antigravity, and Devin all run **native subagents** and read `AGENTS.md`, so most of the OS
+ports as first-class capability — not just reference material. **What ports and how:**
 
-| Capability | Claude Code | Other tools (Codex / Cursor / Devin / Intent / Antigravity) |
+| Capability | Claude Code | Codex / Cursor / Devin / Antigravity / Intent |
 |---|---|---|
 | This brain, routing, hard rules, frameworks | ✅ native | ✅ via `AGENTS.md` |
-| Role definitions (`.claude/agents/`) | ✅ executable subagents | ✅ readable as role prompts to adopt manually |
-| Skills (`.claude/skills/`) | ✅ `/skill` invocation | ✅ readable procedures to run manually |
-| Parallel subagent orchestration / Workflow tool | ✅ native | ⚠️ use the tool's own multi-agent feature; not automatic |
-| Hooks (file-placement validation, etc.) | ✅ enforced | ❌ not enforced — follow file-org rules manually |
-| MCP connectors (corporate data, task systems) | ✅ per-session | ⚠️ depends on the tool's MCP support |
+| Team roles (`.claude/agents/`) | ✅ executable subagents | ✅ **native subagents** — generated to `.cursor/agents/*.md`, `.codex/agents/*.toml`; Antigravity/Devin read `.claude/agents/` + `AGENTS.md` |
+| Parallel multi-agent orchestration | ✅ native (subagents + Workflow) | ✅ each tool's own subagent runner (Cursor Agents Window, Devin sub-agents, Antigravity subagents). Only the `Workflow` JS DSL is Claude-Code-specific |
+| Skills (`.claude/skills/`) | ✅ `/skill` invocation | ⚠️ readable procedures — run the steps manually (not yet generated to native formats) |
+| Hooks / guardrails | ✅ enforced (`.claude/settings.json`) | ⚠️ Cursor & Antigravity have native hooks — the config-sync hook can be ported; Codex/Devin/Intent rely on prompt discipline |
+| MCP connectors (corporate data, task systems) | ✅ per-session | ⚠️ works where the tool supports MCP and you connect them |
 
-**Bottom line for a human on another tool:** you inherit the full knowledge system, team
-structure, routing, and rules. You lose *automatic* orchestration and hook enforcement — you
-run those steps yourself. When in doubt, read `.claude/CLAUDE.md` (generic) and the root
-`CLAUDE.md` (engagement); they are the source of truth.
+**Bottom line for a human on another tool:** you inherit the full knowledge system, the team
+as *native runnable agents*, routing, and rules. The remaining Claude-Code-only pieces are the
+`Workflow` orchestration DSL and slash-command skill invocation. When in doubt, read
+`.claude/CLAUDE.md` (generic) and the root `CLAUDE.md` (engagement); they are the source of truth.
 
-Per-tool adapter files: `.cursor/rules/`, `.devin/`, `.intent/`, `.antigravity/`. See
-`docs/multi-tool-support.md` for the full guide.
+## Staying in sync — one source, generated everywhere
+
+`.claude/agents/**` is the **single source of truth**. Every other tool's agent config is
+**generated** from it — never hand-edited:
+
+- `.cursor/agents/*.md` and `.codex/agents/*.toml` — generated native subagents.
+- The roster block in the team section (between the `GENERATED` markers) — generated.
+
+The engine is `scripts/sync-tool-configs.py`; the `config-steward` agent owns it; a
+`PostToolUse` hook auto-regenerates whenever a file under `.claude/agents/` or
+`.claude/skills/` changes. So **adding, changing, or removing an agent propagates to every
+tool automatically.** To force it: `python scripts/sync-tool-configs.py` (or the
+`/sync-tool-configs` skill). To verify parity: `python scripts/sync-tool-configs.py --check`.
+
+**Never hand-edit a generated file** — your change is erased on the next run. Fix the source
+agent in `.claude/agents/` instead.
+
+Per-tool adapter files (thin pointers): `.cursor/rules/`, `.devin/`, `.intent/`,
+`.antigravity/`. See `docs/multi-tool-support.md` for the full guide.
