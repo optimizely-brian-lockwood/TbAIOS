@@ -1,0 +1,21 @@
+{
+  "_comment": "SAMPLE config for the H-HOOKS modules (commit-block, atomic-tracking, clickup-gate). This file is DATA, not mechanism -- hooks.py hardcodes none of these values. An engagement supplies its own. The values below are GENERIC illustrations (no engagement-specific board filenames, ClickUp space IDs, or repo branch policy baked into code); safe to adapt per engagement and to promote to TbAIOS.",
+
+  "commit_block": {
+    "event_types": ["pre-commit", "pre-push"],
+    "protected_branches": ["main", "master", "production", "release/*"]
+  },
+
+  "atomic_tracking": {
+    "event_types": ["feature-merge"],
+    "_note": "Each engagement declares its OWN tracking file(s). E.g. a repo might set docs/tracking.md; another engagement might use a different board. Never assume a specific filename.",
+    "tracking_file_patterns": ["docs/**/harness-tracking.md", "**/*-tracking.md"]
+  },
+
+  "clickup_gate": {
+    "event_types": ["pre-pr"],
+    "allowed_read_verbs": ["GET"],
+    "_note": "DEFAULT-DENY: only these read verbs pass; every other verb, and any op whose verb/target cannot be determined, is blocked. `targets` lets the module self-identify ClickUp calls from a generic payload.calls list when the adapter has not pre-extracted payload.clickup_ops.",
+    "targets": ["clickup.com", "api.clickup.com"]
+  }
+}

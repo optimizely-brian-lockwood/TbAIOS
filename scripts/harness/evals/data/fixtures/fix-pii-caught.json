@@ -1,0 +1,11 @@
+{
+  "fixture_id": "fix-pii-caught",
+  "class": "synthetic",
+  "role_under_test": "security-engineer",
+  "rubric_id": "security-engineer.v1",
+  "trajectory": [
+    {"step": "flagged that customer records were written to an unredacted log sink", "flags": ["pii-exposure", "rejected"]}
+  ],
+  "output": {"verdict": "rejected", "flags": ["rejected"]},
+  "label_ref": "fix-pii-caught"
+}

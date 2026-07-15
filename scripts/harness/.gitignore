@@ -1,0 +1,10 @@
+# Never promote build/run artifacts to TbAIOS upstream.
+__pycache__/
+*.pyc
+*.pyo
+out*.txt
+.pytest_cache/
+
+# H-OBS observability sink -- metadata-only logs, NEVER committed/promoted (F-3).
+.obs/
+*.jsonl

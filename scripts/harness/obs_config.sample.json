@@ -1,0 +1,15 @@
+{
+  "_comment": "SAMPLE config for the H-OBS emitter. DATA, not mechanism -- obs.py hardcodes none of these. Generic + TbAIOS-promotable: the role enum is the GENERIC 11-role dev-team, not any engagement's people; the sink path is a gitignored local location (see scripts/harness/.gitignore). Nothing egresses; DevOps owns the final path + retention at activation.",
+
+  "event_types": ["obs-emit"],
+
+  "sink_path": "scripts/harness/.obs/obs-log.jsonl",
+
+  "role_enum": [
+    "engineering-manager", "product-manager", "software-architect",
+    "ux-designer", "tech-lead", "senior-developer", "developer",
+    "qa-engineer", "code-reviewer", "security-engineer", "devops-engineer"
+  ],
+
+  "ticket_id_pattern": "^[A-Za-z]+-\\d+$"
+}

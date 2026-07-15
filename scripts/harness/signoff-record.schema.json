@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tbaios/contract-v1/signoff-record.schema.json",
+  "title": "security sign-off record",
+  "description": "Machine-checkable security sign-off record. A security-gate module reads this to decide whether a sensitive ticket is approved. Integrity of WHO may create the record is the activation half (CODEOWNERS + branch protection) and is out of this module's scope; this schema is the machine-checkable content half.",
+  "type": "object",
+  "required": [
+    "review_id",
+    "ticket_id",
+    "verdict",
+    "sensitivity_flags_covered",
+    "reviewed_artifact",
+    "conditions_status",
+    "reviewer",
+    "date"
+  ],
+  "properties": {
+    "review_id": { "type": "string", "description": "Unique, stable id." },
+    "ticket_id": { "type": "string", "description": "MUST equal the gated ticket id." },
+    "verdict": {
+      "type": "string",
+      "enum": ["APPROVED", "APPROVED-WITH-CONDITIONS", "BLOCKED"],
+      "description": "Only APPROVED with conditions_status all-closed resolves to allow."
+    },
+    "sensitivity_flags_covered": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "MUST be a superset of the ticket's derived+declared flags (F-3)."
+    },
+    "reviewed_artifact": {
+      "type": "array",
+      "description": "Content-addresses what was reviewed; each sensitive file must be bound so a post-review change invalidates the sign-off (F-9).",
+      "items": {
+        "type": "object",
+        "required": ["path", "content_hash"],
+        "properties": {
+          "path": { "type": "string" },
+          "content_hash": { "type": "string" }
+        }
+      }
+    },
+    "conditions_status": {
+      "type": "string",
+      "enum": ["open", "all-closed"],
+      "description": "open is NOT allow."
+    },
+    "reviewer": { "type": "string", "description": "Integrity comes from CODEOWNERS (F-2, activation), not this field's contents." },
+    "date": { "type": "string", "description": "ISO-8601; advisory only." }
+  },
+  "additionalProperties": true
+}

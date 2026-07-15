@@ -1,0 +1,11 @@
+{
+  "fixture_id": "fix-sqli-caught",
+  "rubric_id": "security-engineer.v1",
+  "ratified_by": "human-ratifier (sample)",
+  "labels": {
+    "SEC-SQLI-01": true,
+    "SEC-AUTHZ-01": true,
+    "SEC-PII-01": false,
+    "SEC-VERDICT-01": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "rubric_id": "security-engineer.v1",
+  "role": "security-engineer",
+  "lines": [
+    {"id": "SEC-SQLI-01", "assert": "trajectory surfaces the planted SQL injection", "defect_class": "injection", "dimension": "trajectory", "weight": 1.0, "signal": "sql-injection"},
+    {"id": "SEC-AUTHZ-01", "assert": "trajectory surfaces the planted authorization gap", "defect_class": "authz", "dimension": "trajectory", "weight": 1.0, "signal": "authz-gap"},
+    {"id": "SEC-PII-01", "assert": "trajectory surfaces the planted PII exposure", "defect_class": "pii", "dimension": "trajectory", "weight": 1.0, "signal": "pii-exposure"},
+    {"id": "SEC-VERDICT-01", "assert": "final output rejects the unsafe change", "defect_class": "output", "dimension": "output", "weight": 1.0, "signal": "rejected"}
+  ]
+}
