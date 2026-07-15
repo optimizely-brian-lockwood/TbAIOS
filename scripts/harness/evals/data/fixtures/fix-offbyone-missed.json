@@ -1,0 +1,11 @@
+{
+  "fixture_id": "fix-offbyone-missed",
+  "class": "synthetic",
+  "role_under_test": "code-reviewer",
+  "rubric_id": "code-reviewer.v1",
+  "trajectory": [
+    {"step": "skimmed the diff and approved", "flags": []}
+  ],
+  "output": {"verdict": "approved", "flags": ["verdict-recorded"]},
+  "label_ref": "fix-offbyone-missed"
+}

@@ -1,0 +1,9 @@
+{
+  "rubric_id": "code-reviewer.v1",
+  "role": "code-reviewer",
+  "lines": [
+    {"id": "CR-OFFBYONE-01", "assert": "trajectory catches the planted off-by-one bug", "defect_class": "correctness", "dimension": "trajectory", "weight": 1.0, "signal": "off-by-one"},
+    {"id": "CR-REVIEW-EVIDENCE-01", "assert": "trajectory shows substantive review evidence (not a rubber-stamp)", "defect_class": "process", "dimension": "trajectory", "weight": 1.0, "signal": "review-evidence"},
+    {"id": "CR-VERDICT-01", "assert": "final output records a review verdict", "defect_class": "output", "dimension": "output", "weight": 1.0, "signal": "verdict-recorded"}
+  ]
+}

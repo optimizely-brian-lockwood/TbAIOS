@@ -1,0 +1,10 @@
+{
+  "fixture_id": "fix-offbyone-missed",
+  "rubric_id": "code-reviewer.v1",
+  "ratified_by": "human-ratifier (sample)",
+  "labels": {
+    "CR-OFFBYONE-01": true,
+    "CR-REVIEW-EVIDENCE-01": true,
+    "CR-VERDICT-01": true
+  }
+}

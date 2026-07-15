@@ -1,0 +1,11 @@
+{
+  "fixture_id": "fix-pii-caught",
+  "rubric_id": "security-engineer.v1",
+  "ratified_by": "human-ratifier (sample)",
+  "labels": {
+    "SEC-SQLI-01": false,
+    "SEC-AUTHZ-01": false,
+    "SEC-PII-01": true,
+    "SEC-VERDICT-01": true
+  }
+}

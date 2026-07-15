@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tbaios/contract-v1/hook-event.schema.json",
+  "title": "contract-v1 hook event envelope",
+  "description": "The single JSON object a harness adapter puts on the core's stdin. The envelope is fixed across every event_type; only `payload` varies. Source of truth for contract-v1 (portability ADR sec.2.1 / sec.6). Changing this file is an ADR-amendment event, not a casual edit.",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "event_id",
+    "event_type",
+    "occurred_at",
+    "harness",
+    "requested_mode",
+    "payload"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "description": "Semver of the contract the adapter speaks. Core rejects a MAJOR it does not implement.",
+      "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Correlates the response to the event; used by H-OBS and audit."
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Selects the core module, and the event's CATEGORY. GATE/enforcement types (git-boundary; carry ticket+changeset) vs DATA-BOUNDARY types (carry a fixture + boundary, never a ticket). `boundary` is honored ONLY on data-boundary types. Unknown -> block on enforcement, no-op on obs.",
+      "enum": [
+        "pre-tool-use",
+        "pre-commit",
+        "pre-push",
+        "feature-merge",
+        "pre-pr",
+        "eval-run",
+        "eval-egress",
+        "import-into-repo",
+        "obs-emit"
+      ]
+    },
+    "occurred_at": {
+      "type": "string",
+      "description": "ISO-8601 UTC timestamp."
+    },
+    "harness": {
+      "type": "object",
+      "description": "Free-form audit label ONLY. The core must not branch on it.",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "adapter_version": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "requested_mode": {
+      "type": "string",
+      "description": "The posture the adapter can surface. Core policy may HARDEN it (warn->block) but never SOFTEN a fail-closed module.",
+      "enum": ["warn", "block", "annotate"]
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-type-specific body. For a PII-scrub-guarded event this carries `boundary` (import-into-repo | egress-to-judge) and a structured `fixture`. Per-payload sub-schemas are owned by the substrate and eval ADRs."
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,54 @@
+{
+  "_comment": "SAMPLE config for the generic security-gate module. This file is DATA, not mechanism -- the module (security_gate.py) hardcodes none of these values. An engagement supplies its own config (path globs + content signals for its stack). Nothing here is engagement-specific; these are generic software-security patterns and are safe to promote to TbAIOS upstream.",
+
+  "gate_event_types": ["pre-pr", "feature-merge"],
+
+  "ambiguous_flag": "sensitive",
+
+  "safe_globs": [
+    "docs/**",
+    "**/*.md",
+    "**/*.txt",
+    "tests/**",
+    "**/test_*.py",
+    "**/*_test.go",
+    "**/CHANGELOG*",
+    "**/LICENSE*"
+  ],
+
+  "sensitivity_rules": [
+    {
+      "flag": "authn",
+      "path_globs": [
+        "**/auth/**", "**/*auth*", "**/*login*", "**/*session*",
+        "**/*password*", "**/*credential*", "**/*token*", "**/*oauth*"
+      ],
+      "content_signals": [
+        "password", "passwd", "oauth", "authenticate", "authorization",
+        "set_cookie", "jwt", "bearer", "private_key", "client_secret"
+      ]
+    },
+    {
+      "flag": "pii",
+      "path_globs": [
+        "**/*customer*", "**/*user*", "**/*profile*", "**/*account*",
+        "**/*email*", "**/*contact*"
+      ],
+      "content_signals": [
+        "email", "e-mail", "ssn", "social_security", "phone_number",
+        "date_of_birth", "first_name", "last_name", "home_address"
+      ]
+    },
+    {
+      "flag": "external-input",
+      "path_globs": [
+        "**/api/**", "**/handlers/**", "**/routes/**", "**/controllers/**",
+        "**/*webhook*", "**/*endpoint*"
+      ],
+      "content_signals": [
+        "request.args", "request.body", "req.body", "input(", "sys.argv",
+        "os.environ", "unmarshal", "deserialize", "pickle.loads", "eval("
+      ]
+    }
+  ]
+}

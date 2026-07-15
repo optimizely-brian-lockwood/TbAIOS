@@ -1,0 +1,12 @@
+{
+  "fixture_id": "fix-sqli-caught",
+  "class": "synthetic",
+  "role_under_test": "security-engineer",
+  "rubric_id": "security-engineer.v1",
+  "trajectory": [
+    {"step": "reviewed the query builder and flagged unparameterised input", "flags": ["sql-injection"]},
+    {"step": "checked the access-control path and flagged a missing role check", "flags": ["authz-gap"]}
+  ],
+  "output": {"verdict": "rejected", "flags": ["rejected"]},
+  "label_ref": "fix-sqli-caught"
+}

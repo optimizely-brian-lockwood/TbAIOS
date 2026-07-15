@@ -1,0 +1,11 @@
+{
+  "fixture_id": "fix-unlabelled",
+  "class": "synthetic",
+  "role_under_test": "code-reviewer",
+  "rubric_id": "code-reviewer.v1",
+  "trajectory": [
+    {"step": "reviewed the change", "flags": ["review-evidence", "off-by-one"]}
+  ],
+  "output": {"verdict": "changes-requested", "flags": ["verdict-recorded"]},
+  "label_ref": "fix-unlabelled"
+}
