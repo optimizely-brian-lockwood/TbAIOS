@@ -108,7 +108,7 @@ git fetch upstream
 git merge upstream/main
 ```
 
-What gets updated: `.claude/CLAUDE.md`, agents, skills, `docs/cs-team/` templates,
+What gets updated: `.claude/CLAUDE.md`, agents, skills, `docs/team/` templates,
 `docs/dev-team/` templates, `docs/FILE-ORGANIZATION.md`.
 
 What is never touched: `docs/records/`, `docs/distribution/`, `context/`, `initiatives/`,
@@ -131,7 +131,7 @@ TbAIOS/
       challenge-me/SKILL.md      # Plan stress-test skill
   docs/
     FILE-ORGANIZATION.md   # Authoritative file placement rules
-    cs-team/               # CS team operational doc templates
+    team/                  # AI Office team operational doc templates
     dev-team/              # Dev team operational doc templates
   context/                 # Template context files (initiative.md, human-team.md)
   initiatives/

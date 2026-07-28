@@ -25,7 +25,7 @@ docs/
     reference/            ← Stable reference material (guides, rosters, infographics)
   distribution/
     YYYY-MM/              ← Polished shareable deliverables organized by month
-  cs-team/                ← CS team operational docs (unchanged)
+  team/                   ← AI Office team operational docs (unchanged)
   dev-team/               ← Dev team operational docs (unchanged)
 
 context/                  ← Initiative and human-team context files (unchanged)
@@ -150,7 +150,7 @@ CSV, XLSX, JSON, or other structured formats.
 **Naming:** `YYYY-MM-DD-[system]-[description].[ext]`
 
 **Examples:**
-- `2026-06-01-zendesk-digital-csm.csv`
+- `2026-06-01-supportdesk-phase1-segment.csv`
 - `2026-06-01-sfdc-account-health.xlsx`
 
 **Rule:** If it came out of a system export and has not been processed into a markdown
@@ -246,7 +246,7 @@ Is it a script that generates or processes files?
 | Wave artifact | `[topic].md` | `ops-diagnosis.md` | `wave1-ops-diagnosis-v2.md` |
 | Milestone artifact | `[type].md` | `pre-read-pack.md` | `kickoff-pre-read-2026-06-01.md` |
 | Input | `YYYY-MM-DD-[source]-[desc].md` | `2026-06-01-transcript-day1.md` | `input-day1.md` |
-| Data export | `YYYY-MM-DD-[system]-[desc].[ext]` | `2026-06-01-zendesk-digital-csm.csv` | `zendesk-export.csv` |
+| Data export | `YYYY-MM-DD-[system]-[desc].[ext]` | `2026-06-01-supportdesk-phase1-segment.csv` | `supportdesk-export.csv` |
 | Deliverable | `YYYY-MM-DD-[audience]-[desc].[ext]` | `2026-06-02-leadership-90day-plan.pdf` | `90day-plan-v2-FINAL.pdf` |
 | Script | `[verb]-[desc].[ext]` | `generate-pdf.py` | `generate_pdf_v3_NEW.py` |
 
@@ -266,7 +266,7 @@ Is it a script that generates or processes files?
 
 ## What does NOT change
 
-- `docs/cs-team/` — CS team operational docs (charter, workflow, boundaries, journey, context, handoff)
+- `docs/team/` — AI Office team operational docs (charter, workflow, boundaries, journey, context, handoff)
 - `docs/dev-team/` — Dev team operational docs (charter, workflow, boundaries)
 - `context/` — Initiative and human-team context files
 - `initiatives/` — Phase registry and initiative templates

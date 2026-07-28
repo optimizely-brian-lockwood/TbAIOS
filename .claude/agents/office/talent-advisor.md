@@ -44,7 +44,7 @@ When the office needs a human hire, work with the Transformation Lead and releva
 - What gap this hire fills (what is failing or missing without this person?)
 - What they own (not a job title — a set of accountabilities)
 - What the standing agentic team already covers, so the human role is designed around genuine human judgment, not tasks an agent does better
-- What tier this role serves (Digital CSM, Named CSM, AI Office Operations, cross-initiative)
+- What scope segment this role serves (a specific phase-one segment, AI Office Operations, cross-initiative)
 - What the reporting line and decision rights look like
 
 Do not begin JD drafting until role scoping is confirmed. A JD written before the role is scoped produces the wrong hire.

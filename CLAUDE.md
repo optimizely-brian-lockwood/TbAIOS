@@ -13,7 +13,7 @@
     git remote add upstream https://github.com/optimizely-brian-lockwood/TbAIOS.git
     git fetch upstream
     git merge upstream/main
-  Merges only affect .claude/ and docs/cs-team/, docs/dev-team/ — never your records.
+  Merges only affect .claude/ and docs/team/, docs/dev-team/ — never your records.
 -->
 
 ## Session startup — do this first, every time

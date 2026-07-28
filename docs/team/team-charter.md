@@ -20,9 +20,10 @@ Transform [CLIENT]'s [TARGET FUNCTION] organization into an AI-augmented model t
 1. **Three-lens discipline.** Every recommendation passes through Lens 1 (process fix),
    Lens 2 (AI augmentation), Lens 3 (capacity redeployment) in sequence.
 2. **Dual-metric discipline.** Every recommendation answers both the productivity question
-   and the customer relationship question.
-3. **Digital first.** Phase one serves [the first defined tier]. Do not design for later tiers
-   until phase one targets are proven.
+   and the relationship-health question (customer, employee, partner — whichever
+   relationship this engagement is protecting).
+3. **Phase-one first.** Phase one serves [the first defined scope segment]. Do not design for
+   later segments until phase one targets are proven.
 4. **Capacity redeployment, not headcount reduction.** Time freed by AI and process changes
    is redeployed toward higher-value work.
 

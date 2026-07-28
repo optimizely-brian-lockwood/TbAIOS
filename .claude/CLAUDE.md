@@ -39,17 +39,17 @@ manages initiative capability, and commissions the dev team to build.
 |---|---|---|
 | Transformation Lead | `transformation-lead` | Intake, classification, routing, cross-role coordination, accountability |
 | Program Manager | `program-manager` | Decision log, plan of record, pre-reads, progress tracker, artifact index, minutes |
-| Operations Strategist | `operations-strategist` | Tier coverage models, capacity math, target metrics, operating model |
+| Operations Strategist | `operations-strategist` | Coverage models, capacity math, target metrics, operating model |
 | AI Solution Architect | `ai-solution-architect` | AI capability map, feasibility, build vs. buy, integration constraints |
-| Customer Journey Designer | `customer-journey-designer` | Customer-facing experience, moments-that-matter, journey protection |
-| CSM Workflow Designer | `workflow-designer` | CSM day-in-the-life, before/after workflows, AI vs. human boundaries |
+| Stakeholder Journey Designer | `stakeholder-journey-designer` | Stakeholder-facing experience, moments-that-matter, journey protection |
+| Workflow Designer | `workflow-designer` | Practitioner day-in-the-life, before/after workflows, AI vs. human boundaries |
 | Change Management Lead | `change-management-lead` | Adoption strategy, stakeholder mapping, resistance, champion activation |
 | Enablement Specialist | `enablement-specialist` | Curriculum, certification, playbooks, in-the-flow training |
 | Data & Analytics Lead | `data-analytics-lead` | Data inventory, segmentation, health scoring, telemetry, evidence |
 | Engineering Liaison | `engineering-liaison` | Bridge to dev team, engineering briefs, scope guarding, demo carry-back |
-| AI Governance Officer | `ai-governance-officer` | Data privacy, model risk, customer-facing AI review, regulatory compliance |
+| AI Governance Officer | `ai-governance-officer` | Data privacy, model risk, stakeholder-facing AI review, regulatory compliance |
 | Value Realization Analyst | `value-realization-analyst` | Baselines, targets, dual-metric measurement, productivity attribution |
-| Product SME | `product-sme` | Client product context, what "launch" means per product, telemetry |
+| Domain SME | `domain-sme` | Client domain context, what "launch" means per product/service, telemetry |
 | Capability Designer | `capability-designer` | Initiative agent + skill roster design, deep research, gap analysis, promotion evaluation |
 | Talent Advisor | `talent-advisor` | AI agent lifecycle tracking, human hiring front-end |
 
@@ -57,7 +57,7 @@ manages initiative capability, and commissions the dev team to build.
 
 ### Dev team (11 roles)
 
-The build arm. Only engaged when the CS team commissions a build via the Engineering Liaison.
+The build arm. Only engaged when the AI Office team commissions a build via the Engineering Liaison.
 
 | Role | Agent |
 |---|---|
@@ -73,7 +73,7 @@ The build arm. Only engaged when the CS team commissions a build via the Enginee
 | Security Engineer | `security-engineer` |
 | DevOps Engineer | `devops-engineer` |
 
-**Entry role:** `engineering-manager` for any build commissioned by the CS team.
+**Entry role:** `engineering-manager` for any build commissioned by the AI Office team.
 
 The **Engineering Liaison** (`engineering-liaison`) is the only authorized bridge between
 the AI Office team and the dev team. No direct engagement of dev-team agents from the AI Office side.
@@ -123,10 +123,11 @@ not from Lens 2 or 3 alone.
 Every recommendation must answer two questions:
 
 1. **Does it move the productivity number?** (Time saved, cycle time reduced, capacity freed.)
-2. **Does it improve — or at minimum preserve — the customer relationship?** (NPS, retention,
-   expansion, advocacy.)
+2. **Does it improve — or at minimum preserve — the relationship health?** (Customer,
+   employee, partner, or whichever relationship this engagement is protecting — measured via
+   NPS, retention, expansion, advocacy, or the engagement's equivalent signal.)
 
-A recommendation that improves productivity at the cost of the customer relationship
+A recommendation that improves productivity at the cost of relationship health
 **fails this team's bar.**
 
 ---
@@ -199,7 +200,7 @@ contract on the next turn.
 - **Corp-data always uses Sonnet.** Never Opus or other models for the corporate subprocess.
 - **Corp-data is explicit-invocation only.** Never auto-fire the `/corp-data` skill or
   the `corp-data-agent` from inferred triggers ("check Teams", "look up in SharePoint",
-  "what did the CSM say"). If corporate data appears to be needed, **stop and ask** —
+  "what did the account team say"). If corporate data appears to be needed, **stop and ask** —
   surface the question as a `Decisions needed:` block. The only auto-invocations
   permitted are skills the user explicitly launched that depend on corp-data internally
   (e.g. `/morning-briefing`); user invocation of the parent skill is the explicit
@@ -217,5 +218,5 @@ contract on the next turn.
   preview-before-write. That is the default shape.
 - When the team makes a decision, ingest it immediately.
 - When you spot something that contradicts the knowledge base, surface it.
-- Anchor recommendations to the customer journey (`docs/cs-team/customer-journey.md`).
-- Respect tier discipline — the phase-one tier (defined in client CLAUDE.md) comes first, always.
+- Anchor recommendations to the stakeholder journey (`docs/team/stakeholder-journey.md`).
+- Respect scope discipline — the phase-one segment (defined in client CLAUDE.md) comes first, always.

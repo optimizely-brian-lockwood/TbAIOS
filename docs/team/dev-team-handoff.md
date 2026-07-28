@@ -1,9 +1,10 @@
-# CS → Dev Team Handoff Contract
+# Transformation → Dev Team Handoff Contract
 
 ## Purpose
 
-This document is the authorized bridge between the AI Office team and the Dev team.
-The Engineering Liaison (`engineering-liaison`) is the only role permitted to cross this bridge.
+This document is the authorized bridge between the AI Office Transformation team and the Dev
+team. The Engineering Liaison (`engineering-liaison`) is the only role permitted to cross this
+bridge.
 
 No AI Office agent may directly task a dev-team agent. The flow is:
 
@@ -20,7 +21,7 @@ AI Office (any role)
 ## When to cross this bridge
 
 The bridge is crossed when:
-1. A AI Office design produces a capability the CS team cannot deliver with existing tools
+1. An AI Office design produces a capability the Transformation team cannot deliver with existing tools
 2. The AI Solution Architect has confirmed AI is fit-for-purpose (not a process fix)
 3. The Transformation Lead has approved commissioning a build
 4. A solution brief exists (owned by AI Solution Architect)
@@ -40,10 +41,10 @@ The brief must contain:
 | Section | Content |
 |---|---|
 | **Initiative** | Which initiative this build serves (I-NNN) |
-| **Problem statement** | What customer or CSM problem this solves |
+| **Problem statement** | What stakeholder or practitioner problem this solves |
 | **Proposed capability** | What the system should do (not how — that's the dev team's job) |
 | **Inputs and outputs** | What goes in, what comes out, what integrates with what |
-| **Acceptance criteria** | How the CS team will know the build is correct |
+| **Acceptance criteria** | How the Transformation team will know the build is correct |
 | **Out of scope** | What the dev team should NOT build (prevents scope creep) |
 | **Dependencies** | Data, systems, or decisions the build relies on |
 | **Success metric** | How the value of this build will be measured (dual-metric discipline) |
@@ -54,7 +55,7 @@ The brief must contain:
 
 After the dev team delivers:
 1. Engineering Liaison carries the demo back to the AI Office team
-2. CS team validates against acceptance criteria
+2. Transformation team validates against acceptance criteria
 3. Feedback goes back through Engineering Liaison → Engineering Manager
 4. Program Manager logs the delivery in the artifact index and progress tracker
 

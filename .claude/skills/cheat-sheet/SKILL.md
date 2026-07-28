@@ -28,5 +28,5 @@ Display the following reference card verbatim:
 | Document storage (e.g., SharePoint / Google Drive / Confluence) | Corporate docs, strategy decks, org charts | Referenced in input records; key decisions extracted via `/ingest` |
 | Collaboration platform (e.g., Teams / Slack) | Meeting chats, async decisions, stakeholder signals | Harvested via `/morning-briefing` or `/corp-data`; key content ingested |
 | CRM (e.g., Salesforce / HubSpot) | Customer data, pipeline, account health | Referenced in analysis; excerpts ingested when evidence-grade |
-| Customer success platform (e.g., Gainsight / Totango) | Health scores, engagement signals | Referenced in analysis; raw data stays in platform |
+| Domain-specific platform (e.g., customer success / ERP / HRIS) | Health scores, engagement or operational signals | Referenced in analysis; raw data stays in platform |
 | Support platform (e.g., Zendesk / Intercom) | Ticket analysis, support trends | Analysis output ingested; raw tickets stay in platform |
