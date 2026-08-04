@@ -99,6 +99,11 @@ mkdir -p docs/records/{program,pending,waves,milestones,inputs,data,reference}
 mkdir -p docs/distribution context initiatives
 ```
 
+The four dev-team tracking files (`FEATURES.md`, `ACTIVE-WORK.md`, `TEST-ISSUES.md`,
+`CHANGELOG.md`) come along with the clone from Step 1, already blank — they're instance
+data from the moment the dev team starts being used, so there's nothing further to
+initialize here.
+
 ---
 
 ## Receiving upstream updates
@@ -112,7 +117,10 @@ What gets updated: `.claude/CLAUDE.md`, agents, skills, `docs/team/` templates,
 `docs/dev-team/` templates, `docs/FILE-ORGANIZATION.md`.
 
 What is never touched: `docs/records/`, `docs/distribution/`, `context/`, `initiatives/`,
-root `CLAUDE.md`, `.env`.
+root `CLAUDE.md`, `.env`, and the four dev-team tracking files (`FEATURES.md`,
+`ACTIVE-WORK.md`, `TEST-ISSUES.md`, `CHANGELOG.md`) — these are instance data (this repo's
+own backlog, claim board, test log, and shipped-work record), not part of the generic OS
+brain, so an upstream merge never overwrites them.
 
 ## Repo structure
 
@@ -137,6 +145,10 @@ TbAIOS/
   initiatives/
     _template/             # Cookie-cutter for new initiative directories
   scripts/                 # Utility scripts
+  FEATURES.md              # Dev-team ticket backlog (instance data, never synced)
+  ACTIVE-WORK.md           # Dev-team parallel-work claim board (instance data)
+  TEST-ISSUES.md           # Dev-team test-failure log (instance data)
+  CHANGELOG.md             # Dev-team shipped-work record, Keep-a-Changelog format (instance data)
   CLAUDE.md                # CLIENT TEMPLATE — fill this in for each engagement
   README.md                # This file
 ```

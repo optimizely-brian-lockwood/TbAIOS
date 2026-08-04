@@ -78,6 +78,13 @@ The build arm. Only engaged when the AI Office team commissions a build via the 
 The **Engineering Liaison** (`engineering-liaison`) is the only authorized bridge between
 the AI Office team and the dev team. No direct engagement of dev-team agents from the AI Office side.
 
+The dev team's own process docs (`docs/dev-team/team-charter.md`, `workflow.md`,
+`role-boundaries.md`) are binding for every dev-team agent. Its shared state lives in four
+root-level tracking files — `FEATURES.md` (backlog), `ACTIVE-WORK.md` (parallel-work claim
+board), `TEST-ISSUES.md` (test-failure log), `CHANGELOG.md` (shipped-work record) — updated
+atomically with every merge. These four are instance data, not part of this generic OS
+brain, and are never touched by an upstream sync.
+
 ---
 
 ## Generic routing rules

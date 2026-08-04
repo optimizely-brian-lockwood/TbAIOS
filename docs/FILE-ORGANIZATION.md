@@ -205,6 +205,22 @@ as a standalone deliverable — it belongs in `scripts/`.
 
 ---
 
+### 9. Dev-team tracking files → repo root
+
+**What:** The four files the dev team (`.claude/agents/dev/`) reads and writes as part of
+every ticket: `FEATURES.md` (backlog), `ACTIVE-WORK.md` (parallel-work claim board),
+`TEST-ISSUES.md` (test-failure log), `CHANGELOG.md` (shipped-work record, Keep a Changelog
+format). Full convention: `docs/dev-team/workflow.md`.
+
+**Naming:** Fixed filenames, repo root, no dates — these are living instance data, not
+dated artifacts.
+
+**Rule:** Updates land in the **same commit** as the feature merge — this is a
+`docs/dev-team/team-charter.md` hard rule. These four are instance data, never touched by
+an `upstream/main` merge (see root `README.md`).
+
+---
+
 ## Decision tree — where does this file go?
 
 ```
@@ -234,6 +250,9 @@ Is it a polished deliverable for sharing (PDF, Word, PPTX)?
 
 Is it a script that generates or processes files?
   → scripts/
+
+Is it the dev team's backlog, claim board, test log, or changelog?
+  → repo root (FEATURES.md / ACTIVE-WORK.md / TEST-ISSUES.md / CHANGELOG.md)
 ```
 
 ---
@@ -268,6 +287,8 @@ Is it a script that generates or processes files?
 
 - `docs/team/` — AI Office team operational docs (charter, workflow, boundaries, journey, context, handoff)
 - `docs/dev-team/` — Dev team operational docs (charter, workflow, boundaries)
+- `FEATURES.md`, `ACTIVE-WORK.md`, `TEST-ISSUES.md`, `CHANGELOG.md` — dev-team tracking
+  files (instance data — see §9 above)
 - `context/` — Initiative and human-team context files
 - `initiatives/` — Phase registry and initiative templates
 - `.claude/` — Agent system prompts and skills
