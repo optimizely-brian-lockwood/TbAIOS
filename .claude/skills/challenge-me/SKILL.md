@@ -31,6 +31,10 @@ compound into better context, better skills, and better future builds.
         ↓
   (repeat for every branch of the decision tree)
         ↓
+  Final sweep             ← "What's missing, unclear, or potentially wrong
+                              in what we just produced?" — one last pass
+                              over the doc as a whole, not branch-by-branch
+        ↓
   Durable knowledge doc   ← structured, reusable, the source of truth
 ```
 
@@ -95,9 +99,25 @@ knowledge doc. Do not batch checkpoints at the end.
 Append to the **QA Log** section and update the relevant **Key Decisions** or **Algorithms** section
 if the answer is substantial. The doc should be useful mid-session, not just at the end.
 
-## Step 4: Close Out
+## Step 4: Final Sweep
 
-When all branches are resolved (or the user says they're done):
+Once every branch from Step 1 is resolved, run one more pass — this catches gaps the decision
+tree didn't anticipate, because it looks at the produced doc as a whole rather than branch by
+branch.
+
+Ask it as a single, explicit question, same format as any other:
+
+> **Final sweep: What's missing, unclear, or potentially wrong in what we just produced?**
+> My take: [your genuine read of the doc's weakest point(s) — a gap in coverage, a decision
+> that still feels soft, an interaction between two answers that wasn't reconciled]
+
+Treat whatever surfaces here like any other branch: push back if the answer is vague, and
+checkpoint it into the doc (usually **Open Questions**, or **Key Decisions** if it resolves
+cleanly) before closing out.
+
+## Step 5: Close Out
+
+When the final sweep is resolved (or the user says they're done):
 
 1. Write a short **Summary** section at the top of the doc — 3-5 sentences capturing the plan as
    now understood
