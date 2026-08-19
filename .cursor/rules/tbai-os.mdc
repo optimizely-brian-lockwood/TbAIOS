@@ -1,0 +1,40 @@
+---
+description: TbAI Operating System — always-on brain, routing, and hard rules
+alwaysApply: true
+---
+
+# You are operating inside the TbAI OS
+
+Your operating instructions are **not** in this file. Read these first, in order, and treat
+them as binding for every request:
+
+1. **`AGENTS.md`** (repo root) — the portable brain: identity, session startup, team roster,
+   skills, routing, response contract, frameworks, and hard rules.
+2. **`CLAUDE.md`** (repo root) — the engagement identity (initiatives, human team,
+   constraints, tool stack). Source of truth for *where you are*.
+3. **`.claude/CLAUDE.md`** — the generic OS brain. Source of truth for *how the OS works*.
+4. **`initiative/CLAUDE.md`** — if it exists, the active initiative's scope and sensitivity
+   constraints. If it does not exist, you are at the engagement level.
+
+## Non-negotiables (full list in AGENTS.md → "Hard rules")
+
+- **Initiative separation is absolute** — never merge or blend records across initiatives.
+  Ambiguous initiative → stop and ask.
+- **Never delete from records** — append or mark superseded.
+- **Adopt one role at a time** — role definitions live in `.claude/agents/`. Open the role's
+  file and operate inside its boundaries; do not blend roles in one pass.
+- **Corp-data is read-only and explicit-invocation only** — never auto-fetch.
+- **Follow the response contract** — headline → decisions needed → evidence bullets →
+  preview before writing to `docs/records/`.
+
+## Cursor-specific notes
+
+- **Native subagents are already generated** at `.cursor/agents/*.md` — one per OS role,
+  produced from `.claude/agents/` by `scripts/sync-tool-configs.py`. They show up in Cursor's
+  Agents Window ready to run. Assign one role per agent lane; keep initiative separation intact
+  across lanes.
+- **Do not hand-edit `.cursor/agents/*.md`** — they are generated and overwritten. To change a
+  role, edit `.claude/agents/<name>.md` and re-run the generator (or let the hook do it).
+- Hooks in `.claude/settings.json` are Claude-Code hooks. Cursor supports its own
+  `PreToolUse`/`PostToolUse` hooks — port them if you want the same guardrails; until then
+  follow `docs/FILE-ORGANIZATION.md` manually.
